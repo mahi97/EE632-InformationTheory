@@ -1,0 +1,83 @@
+\documentclass[
+  % all of the below options are optional and can be left out
+  % course name (default: 2IL50 Data Structures)
+  course = {{EE623 Information Theory}},
+  % quartile (default: 3)
+  quartile = {{3}},
+  % assignment number/name (default: 1)
+  assignment = 2,
+  % student name (default: Some One)
+  name = {{Mohammad Mahdi Rahimi}},
+  % student number, NOT S-number (default: 0123456)
+  studentnumber = {{20208244}},
+  % student email (default: s.one@student.tue.nl)
+  email = {{mahi@kaist.ac.kr}},
+  % first exercise number (default: 1)
+  firstexercise = 1
+]{aga-homework}
+
+\usepackage{amssymb,latexsym,amsmath,amsthm}
+\usepackage{amsfonts,rawfonts}
+\usepackage{thmtools}
+\usepackage{systeme}
+\usepackage{mathtools,cancel}
+\usepackage{pgfplots} 
+\pgfplotsset{width=10cm,compat=1.9} 
+ \usepgfplotslibrary{external}
+
+\tikzexternalize 
+
+\begin{document}
+
+\exercise
+
+\begin{equation} \label{eq1}
+\begin{split}
+P_Y(y) & = \sum_x{P_X(x)W(y|x)} = \sum_x{P_i}\\
+Q_Y(y) & = \sum_x{Q_X(x)W(y|x)} = \sum_x{Q_i}
+\end{split}
+\end{equation}
+
+\begin{equation} \label{eq2}
+\begin{split}
+D(P_X || Q_X) & = \sum_x{P_X(x)\log{P_X(x) \over Q_X(x)}} \\
+& = (\sum_x{P_X(x)\log{P_X(x) \over Q_X(x)}}) \times 1 \\
+& = (\sum_x{P_X(x)\log{P_X(x) \over Q_X(x)}}) \times \sum_{xy}{W(y|x)} \\
+& = \sum_{xy}{P_X(x)W(y|x)\log{P_X(x)W(y|x) \over Q_X(x) W(y|x)}} \\
+(1) \rightarrow & = \sum_{xy}P_i\log{P_i \over Q_i}  = \sum_y\sum_{x}P_i\log{P_i \over Q_i}\\
+\text{log-sum inequality} \rightarrow & \ge \sum_y{P_Y(y)\log{P_Y(y) \over Q_Y(y)}} \\
+& = D(P_Y || Q_Y). 
+\end{split}
+\end{equation}
+
+\exercise
+
+\begin{equation} \label{eq3}
+\begin{split}
+\mathbb{1}_E & = 
+\begin{cases}
+    1 &\quad\text{if } X \in \{\hat{X}_1 , ..., \hat{X}_L\}\\
+    0 &\quad\text{if } X \notin \{\hat{X}_1 , ..., \hat{X}_L\}
+\end{cases}
+\end{split}
+\end{equation}
+
+\begin{equation} \label{eq4}
+\begin{split}
+H(X,\mathbb{1}_E|Y) & = H(X|Y) + \cancelto{0}{H(\mathbb{1}_E | X,Y)} \\
+& = H(\mathbb{1}_E | Y) + H(X | \mathbb{1}_E, Y) \\
+\rightarrow H(X|Y) & = H(\mathbb{1}_E | Y) + H(X | \mathbb{1}_E, Y)\\
+& = H(\mathbb{1}_E | Y) + Pr(\mathbb{1}_E = 0)H(X|Y, \mathbb{1}_E) + Pr(\mathbb{1}_E = 1)H(X|Y, \mathbb{1}_E = 1)\\
+& \le H(P_e) + P_e \log{(|x| - L)} + (1 - P_e) \log{(L)} \\
+& \le \log(2) + \log(L) + P_e(\log(|x| - L) - \log(L)) \\
+& = \log{(2L)} + P_e\log({|x| \over L} - 1)
+\end{split}
+\end{equation}
+
+\begin{equation} \label{eq5}
+\begin{split}
+H(X|Y) \le \log{(2L)} + P_e\log({|x| \over L} - 1).
+\end{split}
+\end{equation}
+
+\end{document}
