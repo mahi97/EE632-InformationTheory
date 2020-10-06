@@ -3,7 +3,7 @@
   % course name (default: 2IL50 Data Structures)
   course = {{EE623 Information Theory}},
   % quartile (default: 3)
-  quartile = {{3}},
+  quartile = {{4}},
   % assignment number/name (default: 1)
   assignment = 4,
   % student name (default: Some One)
@@ -37,18 +37,47 @@
 
 According to $H(X,Y) = H(Y) + H(X|Y)$, by having a side-information, Y, (Y is coded with $R_y \ge H(Y)$) we can reduce the entropy of X from $H(X)$ to $H(X|Y)$ and it leads to reduce number of bits required for coding X to $R = \lceil H(X|Y) \rceil$, in theory.\\
 
-In practice, we define $2^{nR_y}$ bags w.r.t. coding of Y, then we can reduce the problem of coding a sequence of symbols in X with distribution of $P_x$ to a coding with distribution inside the specified bag of Y which is $P(X|Y)$ and corresponding entropy are $H(X|Y)$ so coding with $R = H(X|Y)$ can have small error with sufficient n.
+In practice, we define $2^{nR_y}$ bags w.r.t. coding of Y, then we can reduce the problem of coding a sequence of symbols in X with distribution of $P_x$ to a coding with distribution inside the specified bag of Y which is $P(X|Y)$ and corresponding entropy are $H(X|Y)$ so coding with $R = H(X|Y)$ can have small error with sufficient large n.
 
 \\
 \exercise
 \subexercise Show (2) and (3)
+\begin{equation} \label{eq3}
+\begin{split}
+P^n(T_P) & = (\text{\# of seq. in }T_P) * (\text{Probability to see a seq. of } T_P \text{ over distribution of P})\\
+(\textbf{Multinomial distribution})& = \frac{n!}{x_1!, x_2!, ..., x_m!}P^{x_1}_1P^{x_2}_2...P^{x_m}_m. \text{ in which} (x_i = nP(a_i))\\
+& = \frac{n!}{\prod_{a \in X} (nP(a))!}\prod_{a \in X} P(a)^{nP(a)}
+\end{split}
+\end{equation}\\
+Likewise,\\
+\begin{equation} \label{eq3}
+\begin{split}
+P^n(T_Q) & = (\text{\# of seq. in }T_Q) * (\text{Probability to see a seq. of } T_Q \text{ over distribution of P})\\
+(\textbf{Multinomial distribution})& = \frac{n!}{x_1!, x_2!, ..., x_m!}P^{x_1}_1P^{x_2}_2...P^{x_m}_m. \text{ in which} (x_i = nQ(a_i))\\
+& = \frac{n!}{\prod_{a \in X} (nQ(a))!}\prod_{a \in X} P(a)^{nQ(a)}
+\end{split}
+\end{equation}
+\subexercise Show (4)\\
+\begin{equation} \label{eq3}
+\begin{split}
+\frac{P^n(T_Q)}{P^n(T_P)} & = \frac{\frac{n!}{\prod_{a \in X} (nQ(a))!}\prod_{a \in X} P(a)^{nQ(a)}} {\frac{n!}{\prod_{a \in X} (nP(a))!}\prod_{a \in X} P(a)^{nP(a)}}\\
+& =  \frac{\prod_{a \in X} (nP(a))!} {\prod_{a \in X} (nQ(a))!} \prod_{a \in X} P(a)^{n(Q(a) - P(a))}\\
+& = \prod_{a \in X} \frac{ (nP(a))!} {(nQ(a))!} P(a)^{n(Q(a) - P(a))}
+\end{split}
+\end{equation}
 
-
-\subexercise Show (4)
-
-\subexercise Use (5) to Prove (1)
-
-
+\subexercise Use (5) to Prove (1)\\
+\begin{equation} \label{eq3}
+\begin{split}
+\frac{n!}{m!} & \le n^{n - m}\\
+\text{with }n \rightarrow nP(a), m \rightarrow nQ(a)  \Rightarrow \frac{(nP(a))!}{(nQ(a))!} & \le (nP(a))^{n(P(a) - Q(a))}\\
+\Rightarrow \frac{(nQ(a))!}{(nP(a))!} * (P(a))^{n(Q(a) - P(a))} & \le (nP(a))^{n(P(a) - Q(a))} * (P(a))^{n(Q(a) - P(a))}\\
+\Rightarrow \frac{(nQ(a))!}{(nP(a))!} * (P(a))^{n(Q(a) - P(a))} & \le n^{n(P(a) - Q(a))}\\
+\Rightarrow \prod_{a \in X}\frac{(nQ(a))!}{(nP(a))!} * (P(a))^{nQ(a) - P(a))} & \le  \prod_{a \in X}n^{n(P(a) - Q(a))} = n^{\sum_{a \in X} n(P(a) - Q(a))}\\
+\Rightarrow \frac{P^n(T_Q)}{P^n(T_P)} & \le n^{n(\sum P(a) - \sum Q(a))} = n^{n(1 - 1))} = n^0 = 1 \\
+\Rightarrow P^n(T_Q) & \le P^n(T_P)
+\end{split}
+\end{equation}
 
 
 \end{document}
