@@ -5,7 +5,7 @@
   % quartile (default: 3)
   quartile = {{3}},
   % assignment number/name (default: 1)
-  assignment = 3,
+  assignment = 4,
   % student name (default: Some One)
   name = {{Mohammad Mahdi Rahimi}},
   % student number, NOT S-number (default: 0123456)
@@ -30,6 +30,24 @@
 \tikzexternalize 
 
 \begin{document}
+
+\exercise
+\subexercise provide a way to construct a source code at rate $R = H(X|Y)$.\\
+
+
+According to $H(X,Y) = H(Y) + H(X|Y)$, by having a side-information, Y, (Y is coded with $R_y \ge H(Y)$) we can reduce the entropy of X from $H(X)$ to $H(X|Y)$ and it leads to reduce number of bits required for coding X to $R = \lceil H(X|Y) \rceil$, in theory.\\
+
+In practice, we define $2^{nR_y}$ bags w.r.t. coding of Y, then we can reduce the problem of coding a sequence of symbols in X with distribution of $P_x$ to a coding with distribution inside the specified bag of Y which is $P(X|Y)$ and corresponding entropy are $H(X|Y)$ so coding with $R = H(X|Y)$ can have small error with sufficient n.
+
+\\
+\exercise
+\subexercise Show (2) and (3)
+
+
+\subexercise Show (4)
+
+\subexercise Use (5) to Prove (1)
+
 
 
 
