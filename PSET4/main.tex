@@ -34,11 +34,30 @@
 \exercise
 \subexercise provide a way to construct a source code at rate $R = H(X|Y)$.\\
 
-
-According to $H(X,Y) = H(Y) + H(X|Y)$, by having a side-information, Y, (Y is coded with $R_y \ge H(Y)$) we can reduce the entropy of X from $H(X)$ to $H(X|Y)$ and it leads to reduce number of bits required for coding X to $R = \lceil H(X|Y) \rceil$, in theory.\\
+According to $H(X,Y) = H(Y) + H(X|Y)$, by having a side-information, Y, (Y is coded with $R_y \ge H(Y)$) we can reduce the entropy of X,Y to $H(X|Y)$ and it leads to reduce number of bits required for coding X from $H(X)$ to $R = \lceil H(X|Y) \rceil$, in theory.\\
 
 In practice, we define $2^{nR_y}$ bags w.r.t. coding of Y, then we can reduce the problem of coding a sequence of symbols in X with distribution of $P_x$ to a coding with distribution inside the specified bag of Y which is $P(X|Y)$ and corresponding entropy are $H(X|Y)$ so coding with $R = H(X|Y)$ can have small error with sufficient large n.
 
+\subexercise proof of \textbf{achievability} of coding with rate of $R = H(X|Y)$.\\
+One can enumerate only the sequences in the typical set of one \textbf{bag} with size of a  $|A^{(n_{y_i})}_\delta (P)| \le 2^{n(H(X|Y) + \delta)}$.  For any $R > H(X|Y)$, one can pick $\delta$ such that $R > H(X|Y)  + \delta > H(X|Y)$. From WLLN, $P^{(n)}_e = P^n(X^n \in A^{(n)}_\delta ) \rightarrow 0\text{ as }n \rightarrow \infty$.
+
+
+\subexercise proof of \textbf{converse} of coding with rate of $R = H(X|Y)$.\\
+We will use Fano’s inequality to prove the converse. Fano’s inequality focuses on the relation between $H(X^n|Y)$ and $P^{(n)}_e = Pr(g_n(Y) \neq X^n)$  where $Y = f_n(X^n)$ is the codeword (bitsequence).  More specifically, Fano’s inequality says that after observing $Y$ if we still have some uncertainty about $X^n$, which is quantified by $H(X^n|Y)$, $P^{(n)}_e$ cannot be too small.
+We focus on the case which we are selecting trying to decoded an $X$ from $ \hat{X} $ which we reduced to a bag with entropy of $H(X|Y)$ .\\
+
+\begin{equation} \label{eq3}
+\begin{split}
+nH(X|Y) & = H(X^n|Y) \\
+& = H(X^n|Y, \hat{X}) + I(X^n|Y; \hat{X})\\
+& \le  H(X^n|Y, \hat{X}) + H(\hat(X))\\
+& \le  H(X^n|Y, \hat{X}) + nR\\
+& \le H(\mathbb{1}_E) + P^{(n)}_e log(|X|^n - 1) + nR\\
+& \le (nR + 1) + P^{(n)}_e log(|X|^n)\\
+& \Rightarrow P^{(n)}_e \ge \frac{H(X|Y) - R - {1 \over n}}{log|X|}
+\end{split}
+\end{equation}\\
+if $R < H(X|Y)$ then $P^{(n)}_e$ is greater than a constant number and can not reach zero with any large $n$. So $R$ should be greater or equal to $H(X|Y) + P^{(n)}_e log|X| - {1 \over n}$ which means with $n \rightarrow \infty$ we have $R \ge H(X|Y)$
 \\
 \exercise
 \subexercise Show (2) and (3)
