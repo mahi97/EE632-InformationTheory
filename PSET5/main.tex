@@ -1,0 +1,101 @@
+\documentclass[
+  % all of the below options are optional and can be left out
+  % course name (default: 2IL50 Data Structures)
+  course = {{EE623 Information Theory}},
+  % quartile (default: 3)
+  quartile = {{4}},
+  % assignment number/name (default: 1)
+  assignment = 5,
+  % student name (default: Some One)
+  name = {{Mohammad Mahdi Rahimi}},
+  % student number, NOT S-number (default: 0123456)
+  studentnumber = {{20208244}},
+  % student email (default: s.one@student.tue.nl)
+  email = {{mahi@kaist.ac.kr}},
+  % first exercise number (default: 1)
+  firstexercise = 1
+]{aga-homework}
+
+\usepackage{amssymb,latexsym,amsmath,amsthm}
+\usepackage{amsfonts,rawfonts}
+\usepackage{thmtools}
+\usepackage{systeme}
+\usepackage{mathtools,cancel}
+\usepackage{tikz}
+\usepackage{pgfplots} 
+\usepackage[pdf]{graphviz}
+\pgfplotsset{width=10cm,compat=1.9} 
+ \usepgfplotslibrary{external}
+
+\tikzexternalize 
+
+\begin{document}
+
+\exercise Prove Strong typical set is a subset of Weak typical set
+\\\\
+By definition of Strong typical set we have:
+\begin{equation} \label{eq3}
+\begin{split}
+& | P(x) - Q(x) | \le \delta \\
+\Rightarrow & Q(x) - \delta \le P(x) \le Q(x) + \delta \\\\
+\Rightarrow & -Q(x)log(Q(x)) - \delta log(Q(x)) \le -P(x)log(Q(x)) \le -Q(x)log(Q(x)) + \delta log(Q(x))\\\\
+\Rightarrow & \sum{-Q(x)log(Q(x))} - \sum{\delta log(Q(x))} \le \sum{-P(x)log(Q(x))} \le \sum{-Q(x)log(Q(x))} + \sum{\delta log(Q(x))}\\\\
+\Rightarrow & H(Q) - \delta \sum{log(Q(x))} \le \sum{-P(x)log(Q(x))} \le H(Q) + \delta \sum{log(Q(x))}\\\\
+\Rightarrow & H(Q) - \epsilon(\delta) \le \sum{-P(x)log(Q(x))} \le H(Q) + \epsilon(\delta)\\
+\end{split}
+\end{equation}\\
+On the other hand we have,
+\begin{equation} \label{eq3}
+\begin{split}
+& Q(X) = \prod{Q(x_i}^{nP(x_i)}\\\\
+\Rightarrow & log(Q(X)) = n\sum{P(x_i)logQ(x_i)}\\\\
+\Rightarrow & P(x_i)\sum{logQ(x_i)} = \frac{1}{n}log(Q(X))
+\end{split}
+\end{equation}\\
+By applying (2) in (1) we get:
+\begin{equation} \label{eq3}
+\begin{split}
+H(Q) - \epsilon(\delta) \le -\frac{1}{n}log(Q(X)) \le H(Q) + \epsilon(\delta)\\
+\end{split}
+\end{equation}\\
+According to definition of Weak Typical sets and (3), we can conclude than any Strong Typical set is an Weak Typical set.
+
+\newpage
+\\
+\exercise
+\\\\
+with t satisfying:
+\begin{equation} \label{eq3}
+\begin{split}
+\mathbb{E}_P_t [F(X)] & = \sum_{x \in X} P_t(x)F(x) = \eta \\
+P_t(x) & = \frac{1}{g(t)}Q(x)e^{tF(x)} \\
+g(t) & = \sum{Q(x)e^{tF(x)}}
+\end{split}
+\end{equation}\\
+We show $s = t$ will maximize following term:\\
+\begin{equation} \label{eq3}
+\begin{split}
+s\eta - \log{g(s)}
+\end{split}
+\end{equation}
+We also have:
+\begin{equation} \label{eq3}
+\begin{split}
+\frac{dg(t)}{dt} = 
+g^{\prime}(t) = (\sum{Q(x)e^{tF(x)}})^{\prime} = \sum{Q(x)F(x)e^{tF(x)}}
+\end{split}
+\end{equation}\\
+For this we derivative (5) and equal it to zero:
+\begin{equation} \label{eq3}
+\begin{split}
+& \eta - \frac{g^{\prime}(s)}{g(s)} = 0 \\
+\Rightarrow & \eta = \frac{g^{\prime}(s)}{g(s)} \\
+(4) \Rightarrow & \sum_{x \in X} P_t(x)F(x) = \frac{g^{\prime}(s)}{g(s)} \\
+(4) \Rightarrow & \sum_{x \in X} \frac{1}{g(t)}Q(x)e^{tF(x)}F(x) = \frac{g^{\prime}(s)}{g(s)} \\
+\Rightarrow & \frac{1}{g(t)}\sum_{x \in X} Q(x)e^{tF(x)}F(x) = \frac{g^{\prime}(s)}{g(s)} \\
+(6) \Rightarrow & \frac{g^{\prime}(t)}{g(t)} = \frac{g^{\prime}(s)}{g(s)}\\
+\Rightarrow & s = t
+\end{split}
+\end{equation}\\
+So, \textbf{s} equals to \textbf{t} will maximize (5), the exponent in the Chernoff bound is equal to the exponent that been proved
+\end{document}
