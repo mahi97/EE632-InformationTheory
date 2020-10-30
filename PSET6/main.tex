@@ -31,71 +31,105 @@
 
 \begin{document}
 
-\exercise Prove Strong typical set is a subset of Weak typical set
+\exercise Finding $P_x$ to maximize channel capacity
 \\\\
-By definition of Strong typical set we have:
-\begin{equation} \label{eq3}
-\begin{split}
-& | P(x) - Q(x) | \le \delta \\
-\Rightarrow & Q(x) - \delta \le P(x) \le Q(x) + \delta \\\\
-\Rightarrow & -Q(x)log(Q(x)) - \delta log(Q(x)) \le -P(x)log(Q(x)) \le -Q(x)log(Q(x)) + \delta log(Q(x))\\\\
-\Rightarrow & \sum{-Q(x)log(Q(x))} - \sum{\delta log(Q(x))} \le \sum{-P(x)log(Q(x))} \le \sum{-Q(x)log(Q(x))} + \sum{\delta log(Q(x))}\\\\
-\Rightarrow & H(Q) - \delta \sum{log(Q(x))} \le \sum{-P(x)log(Q(x))} \le H(Q) + \delta \sum{log(Q(x))}\\\\
-\Rightarrow & H(Q) - \epsilon(\delta) \le \sum{-P(x)log(Q(x))} \le H(Q) + \epsilon(\delta)\\
-\end{split}
-\end{equation}\\
-On the other hand we have,
-\begin{equation} \label{eq3}
-\begin{split}
-& Q(X) = \prod{Q(x_i}^{nP(x_i)}\\\\
-\Rightarrow & log(Q(X)) = n\sum{P(x_i)logQ(x_i)}\\\\
-\Rightarrow & P(x_i)\sum{logQ(x_i)} = \frac{1}{n}log(Q(X))
-\end{split}
-\end{equation}\\
-By applying (2) in (1) we get:
-\begin{equation} \label{eq3}
-\begin{split}
-H(Q) - \epsilon(\delta) \le -\frac{1}{n}log(Q(X)) \le H(Q) + \epsilon(\delta)\\
-\end{split}
-\end{equation}\\
-According to definition of Weak Typical sets and (3), we can conclude than any Strong Typical set is an Weak Typical set.
+For finding $P_x$ which maximize $I_{P_x}(P_X, W)$ we use Lagrange Multipliers, and assuming $P_x$ is to form of $[p,q,q]$. 
 
-\newpage
+\begin{equation} \label{eq3}
+\begin{split}
+\mathcal{L}(P_x, \lambda) = \mathcal{L}(p, q, \lambda) & = I(P_x, W) - \lambda(p + 2q - 1) \\
+I(P_x, W) & = H(Y) - H(Y|X)
+\end{split}
+\end{equation}\\
+
+\begin{equation} \label{eq3}
+\begin{split}
+H(Y) & =  p\log{p} + 2q\log{q}\\
+H(Y|X) & =  Pr(X=1)\cancelto{0}{H(Y|X=1)}+Pr(X=2)\cancelto{H_{Bern}(\epsilon)}{H(Y|X=2)}+Pr(X=3)\cancelto{H_{Bern}(\epsilon)}{H(Y|X=3)}\\
+& = 2qH_{Bern}(\epsilon)\\
+\Rightarrow I(P_x, W) & = p\log{p} + 2q\log{q} - 2qH_{Bern}(\epsilon)\\
+\Rightarrow \mathcal{L}(p, q, \lambda) & = p\log{p} + 2q\log{q} - 2qH_{Bern}(\epsilon) - \lambda(p + 2q - 1)
+\end{split}
+\end{equation}
+
+\begin{equation} \label{eq3}
+\begin{split}
+\begin{cases}
+\frac{\partial\mathcal{L}}{\partial p} & = \log{p} + 1 - \lambda\\
+\frac{\partial\mathcal{L}}{\partial q}  & = 2\log{q} + 2 - 2H_{Bern}(\epsilon) - 2\lambda\\
+\frac{\partial\mathcal{L}}{\partial \lambda} & = p + 2q - 1\\
+\end{cases}\\
+\end{split}
+\end{equation}
+\begin{equation} \label{eq3}
+\begin{split}
+& \Rightarrow \begin{cases}
+\log{p} + 1 - \lambda = 0\\
+2\log{q} + 2 - 2H_{Bern}(\epsilon) - 2\lambda = 0\\
+p + 2q - 1 = 0 \Rightarrow p = 1 - 2q\\
+\end{cases}\\
+& \Rightarrow \begin{cases}
+\log{1 -2q} + 1 - \lambda = 0 \Rightarrow 2\lambda - 2\log{1 -2q} - 2 = 0\\
+2\log{q} + 2 - 2H_{Bern}(\epsilon) - 2\lambda = 0\\
+\end{cases}\\
+&\Rightarrow 2\log{q} + 2 - 2H_{Bern}(\epsilon) - 2\log{1 -2q} - 2 = 0\\
+&\Rightarrow 2\log{q} - 2H_{Bern}(\epsilon) - 2\log{1 -2q} = 0\\
+&\Rightarrow \log{q} - H_{Bern}(\epsilon) - \log{1 -2q} = 0\\
+&\Rightarrow \log{\frac{q}{1 -2q}} - H_{Bern}(\epsilon) = 0\\
+&\Rightarrow \log{\frac{q}{1 -2q}} = H_{Bern}(\epsilon)\\
+&\Rightarrow \frac{q}{1 -2q} = e^{H_{Bern}(\epsilon)}\\
+&\Rightarrow q = \frac{e^{H_{Bern}(\epsilon)}}{1 + 2e^{H_{Bern}(\epsilon)}} \Rightarrow 2q = \frac{2e^{H_{Bern}(\epsilon)}}{1 + 2e^{H_{Bern}(\epsilon)}} \Rightarrow p = \frac{1}{1 + 2e^{H_{Bern}(\epsilon)}}\\
+\end{split}
+\end{equation}
+
 \\
 \exercise
 \\\\
-with t satisfying:
+We want to examine satisfaction of following inequalities
 \begin{equation} \label{eq3}
 \begin{split}
-\mathbb{E}_P_t [F(X)] & = \sum_{x \in X} P_t(x)F(x) = \eta \\
-P_t(x) & = \frac{1}{g(t)}Q(x)e^{tF(x)} \\
-g(t) & = \sum{Q(x)e^{tF(x)}}
-\end{split}
-\end{equation}\\
-We show $s = t$ will maximize following term:\\
-\begin{equation} \label{eq3}
-\begin{split}
-s\eta - \log{g(s)}
+&\left|- \frac{1}{n} \sum_{i=1}^{n} \log{P_{XY}(x_i, y_i)} - H(P_{XY})\right| \le \epsilon,\\
+&\left| - \frac{1}{n} \sum_{i=1}^{n} \log{P_X(x_i)} - H(P_X)\right| \le \epsilon,\\
+&\left| - \frac{1}{n} \sum_{i=1}^{n} \log{P_Y(y_i)} - H(P_Y)\right| \le \epsilon,\\
 \end{split}
 \end{equation}
-We also have:
+and we have,
 \begin{equation} \label{eq3}
 \begin{split}
-\frac{dg(t)}{dt} = 
-g^{\prime}(t) = (\sum{Q(x)e^{tF(x)}})^{\prime} = \sum{Q(x)F(x)e^{tF(x)}}
+& P_{XY}(0,0) = \frac{4}{8},P_{XY}(1,1) = \frac{2}{8},P_{XY}(0,1) = P_{XY}(1,0) = \frac{1}{8}. \\
+& \hat{P}_{x^ny^n}(0,0) = \frac{6}{16},\hat{P}_{x^ny^n}(1,1) = \frac{8}{16},\hat{P}_{x^ny^n}(0,1) = \hat{P}_{x^ny^n}(1,0) = \frac{1}{16}. 
 \end{split}
-\end{equation}\\
-For this we derivative (5) and equal it to zero:
+\end{equation}
+then we calculate marginal distribution as:
 \begin{equation} \label{eq3}
 \begin{split}
-& \eta - \frac{g^{\prime}(s)}{g(s)} = 0 \\
-\Rightarrow & \eta = \frac{g^{\prime}(s)}{g(s)} \\
-(4) \Rightarrow & \sum_{x \in X} P_t(x)F(x) = \frac{g^{\prime}(s)}{g(s)} \\
-(4) \Rightarrow & \sum_{x \in X} \frac{1}{g(t)}Q(x)e^{tF(x)}F(x) = \frac{g^{\prime}(s)}{g(s)} \\
-\Rightarrow & \frac{1}{g(t)}\sum_{x \in X} Q(x)e^{tF(x)}F(x) = \frac{g^{\prime}(s)}{g(s)} \\
-(6) \Rightarrow & \frac{g^{\prime}(t)}{g(t)} = \frac{g^{\prime}(s)}{g(s)}\\
-\Rightarrow & s = t
+& P_{X}(0) = P_{Y}(0) = \frac{5}{8},P_{X}(1) = P_{Y}(1) = \frac{3}{8}. \\
+& \hat{P}_{X}(0) = \hat{P}_{Y}(0) = \frac{7}{16},\hat{P}_{X}(1) = \hat{P}_{Y}(1) = \frac{9}{16}. \\
 \end{split}
-\end{equation}\\
-So, \textbf{s} equals to \textbf{t} will maximize (5), the exponent in the Chernoff bound is equal to the exponent that been proved
+\end{equation}
+There for inequalities of (5) can be check as follows with $n \rightarrow \infty$:
+\begin{equation} \label{eq3}
+\begin{split}
+& -\frac{1}{n} \sum_{i=1}^{n} \log{P_{XY}(x_i, y_i)} - H(P_{XY}) = 0 \\
+\Rightarrow & \begin{cases}
+-\frac{1}{n} \sum_{i=1}^{n} \log{P_{XY}(x_i, y_i)} = \frac{6}{16}\log\frac{4}{8} + \frac{8}{16}\log\frac{2}{8} + \frac{1}{16}\log\frac{1}{8} + \frac{1}{16}\log\frac{1}{8} = \frac{14}{8}\\
+H(P_{XY}) = \frac{4}{8}\log\frac{4}{8} + \frac{2}{8}\log\frac{2}{8} + \frac{1}{8}\log\frac{1}{8} + \frac{1}{8}\log\frac{1}{8} = \frac{14}{8}
+\end{cases}\\
+& \Rightarrow \frac{14}{8} - \frac{14}{8} = 0.\ \textbf{First inequality satisfied}
+\end{split}
+\end{equation}
+\begin{equation} \label{eq3}
+\begin{split}
+& -\frac{1}{n} \sum_{i=1}^{n} \log{P_{X}(x_i)} - H(P_{X}) = 0 \\
+\Rightarrow & \begin{cases}
+-\frac{1}{n} \sum_{i=1}^{n} \log{P_{X}(x_i)} = \frac{7}{16}\log\frac{5}{8} + \frac{9}{16}\log\frac{3}{8}\\
+H(P_{X}) = \frac{5}{8}\log\frac{5}{8} + \frac{3}{8}\log\frac{3}{8}
+\end{cases}\\
+& \Rightarrow \left|-\frac{7}{16}\log\frac{5}{8} - \frac{9}{16}\log\frac{3}{8} + \frac{5}{8}\log\frac{5}{8} + \frac{3}{8}\log\frac{3}{8}\right| = \left|\frac{3}{16}\log\frac{5}{8} - \frac{3}{16}\log\frac{3}{8} \right| > 0.\\
+&\textbf{Second inequality not satisfied, Likewise Third inequality}
+\end{split}
+\end{equation}
+
+So it shows that there exist some distribution over $XY$ that satisfy the first inequality but not the others, in other word satisfaction of first inequality cannot grant the satisfaction of second and third inequalities. 
+
 \end{document}
