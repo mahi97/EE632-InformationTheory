@@ -37,48 +37,40 @@ For finding $P_x$ which maximize $I_{P_x}(P_X, W)$ we use Lagrange Multipliers, 
 
 \begin{equation} \label{eq3}
 \begin{split}
-\mathcal{L}(P_x, \lambda) = \mathcal{L}(p, q, \lambda) & = I(P_x, W) - \lambda(p + 2q - 1) \\
-I(P_x, W) & = H(Y) - H(Y|X)
+\mathcal{L}(P_x, \lambda) & = \mathcal{L}(p, q, \lambda) = I(P_x, W) - \lambda(p + 2q - 1) \\
+I(P_x, W) & = H(Y) - H(Y|X)\\
+H(Y) & =  - p\log{p} - 2q\log{q}\\
+H(Y|X) & =  Pr(X=1)\cancelto{0}{H(Y|X=1)}+Pr(X=2)\cancelto{H_{Bern}(\epsilon)}{H(Y|X=2)}+Pr(X=3)\cancelto{H_{Bern}(\epsilon)}{H(Y|X=3)} = 2qH_{Bern}(\epsilon)\\
+\Rightarrow I(P_x, W) & = - p\log{p} - 2q\log{q} - 2qH_{Bern}(\epsilon)\\
+\Rightarrow \mathcal{L}(p, q, \lambda) & =  - p\log{p} - 2q\log{q} - 2qH_{Bern}(\epsilon) - \lambda(p + 2q - 1)
 \end{split}
-\end{equation}\\
-
+\end{equation}
+by partial differentiation we got:
 \begin{equation} \label{eq3}
 \begin{split}
-H(Y) & =  p\log{p} + 2q\log{q}\\
-H(Y|X) & =  Pr(X=1)\cancelto{0}{H(Y|X=1)}+Pr(X=2)\cancelto{H_{Bern}(\epsilon)}{H(Y|X=2)}+Pr(X=3)\cancelto{H_{Bern}(\epsilon)}{H(Y|X=3)}\\
-& = 2qH_{Bern}(\epsilon)\\
-\Rightarrow I(P_x, W) & = p\log{p} + 2q\log{q} - 2qH_{Bern}(\epsilon)\\
-\Rightarrow \mathcal{L}(p, q, \lambda) & = p\log{p} + 2q\log{q} - 2qH_{Bern}(\epsilon) - \lambda(p + 2q - 1)
+& \Rightarrow \begin{cases}
+\frac{\partial\mathcal{L}}{\partial p} = -\log{p} - 1 - \lambda = 0\\
+\frac{\partial\mathcal{L}}{\partial q} = -2\log{q} - 2 - 2H_{Bern}(\epsilon) - 2\lambda = 0\\
+\frac{\partial\mathcal{L}}{\partial \lambda} = p + 2q - 1 = 0 \Rightarrow p = 1 - 2q\\
+\end{cases}\\
+& \Rightarrow \begin{cases}
+-\log{(1 -2q)} - 1 - \lambda = 0 \Rightarrow 2\lambda + 2\log{(1 -2q)} + 2 = 0\\
+-2\log{q} - 2 - 2H_{Bern}(\epsilon) - 2\lambda = 0\\
+\end{cases}\\
+&\Rightarrow -2\log{q} - 2H_{Bern}(\epsilon) + 2\log{(1 -2q)} = 0\\
+&\Rightarrow -\log{q} - H_{Bern}(\epsilon) + \log{(1 -2q)} = 0\\
+&\Rightarrow \log{\frac{1 -2q}{q}} = H_{Bern}(\epsilon)\\
+&\Rightarrow \frac{1 -2q}{q} = 2^{H_{Bern}(\epsilon)}\\
+&\Rightarrow q = \frac{1}{2^{H_{Bern}(\epsilon)} + 2} \Rightarrow 2q = \frac{1}{2^{H_{Bern}(\epsilon) - 1} + 1} \Rightarrow p = \frac{2^{H_{Bern}(\epsilon) - 1}}{2^{H_{Bern}(\epsilon) - 1} + 1}\\
 \end{split}
 \end{equation}
 
 \begin{equation} \label{eq3}
 \begin{split}
-\begin{cases}
-\frac{\partial\mathcal{L}}{\partial p} & = \log{p} + 1 - \lambda\\
-\frac{\partial\mathcal{L}}{\partial q}  & = 2\log{q} + 2 - 2H_{Bern}(\epsilon) - 2\lambda\\
-\frac{\partial\mathcal{L}}{\partial \lambda} & = p + 2q - 1\\
-\end{cases}\\
-\end{split}
-\end{equation}
-\begin{equation} \label{eq3}
-\begin{split}
-& \Rightarrow \begin{cases}
-\log{p} + 1 - \lambda = 0\\
-2\log{q} + 2 - 2H_{Bern}(\epsilon) - 2\lambda = 0\\
-p + 2q - 1 = 0 \Rightarrow p = 1 - 2q\\
-\end{cases}\\
-& \Rightarrow \begin{cases}
-\log{1 -2q} + 1 - \lambda = 0 \Rightarrow 2\lambda - 2\log{1 -2q} - 2 = 0\\
-2\log{q} + 2 - 2H_{Bern}(\epsilon) - 2\lambda = 0\\
-\end{cases}\\
-&\Rightarrow 2\log{q} + 2 - 2H_{Bern}(\epsilon) - 2\log{1 -2q} - 2 = 0\\
-&\Rightarrow 2\log{q} - 2H_{Bern}(\epsilon) - 2\log{1 -2q} = 0\\
-&\Rightarrow \log{q} - H_{Bern}(\epsilon) - \log{1 -2q} = 0\\
-&\Rightarrow \log{\frac{q}{1 -2q}} - H_{Bern}(\epsilon) = 0\\
-&\Rightarrow \log{\frac{q}{1 -2q}} = H_{Bern}(\epsilon)\\
-&\Rightarrow \frac{q}{1 -2q} = e^{H_{Bern}(\epsilon)}\\
-&\Rightarrow q = \frac{e^{H_{Bern}(\epsilon)}}{1 + 2e^{H_{Bern}(\epsilon)}} \Rightarrow 2q = \frac{2e^{H_{Bern}(\epsilon)}}{1 + 2e^{H_{Bern}(\epsilon)}} \Rightarrow p = \frac{1}{1 + 2e^{H_{Bern}(\epsilon)}}\\
+C & = \max_{P_X}I_{P_X}(P_X, W) = \max_{p} -p\log p - (1 - p)\log(\frac{1-p}{2}) -(1-p)H_{Bern(\epsilon)}\\
+& =  \frac{-2^{H_{Bern}(\epsilon) - 1}\log{2^{H_{Bern}(\epsilon) - 1}} + 2^{H_{Bern}(\epsilon) - 1} \log{(2^{H_{Bern}(\epsilon) - 1} + 1)} + \log2 + \log{(2^{H_{Bern}(\epsilon) - 1} + 1)} - H }{2^{H_{Bern}(\epsilon) - 1} + 1}\\
+& = \frac{(2^{H_{Bern}(\epsilon) - 1} + 1)(1 - H_{Bern}(\epsilon)) + (2^{H_{Bern}(\epsilon) - 1} + 1)(\log{(2^{H_{Bern}(\epsilon) - 1} + 1)}}{2^{H_{Bern}(\epsilon) - 1} + 1}\\
+& = 1 - H_{Bern}(\epsilon) + \log{(2^{H_{Bern}(\epsilon) - 1} + 1)}\\
 \end{split}
 \end{equation}
 

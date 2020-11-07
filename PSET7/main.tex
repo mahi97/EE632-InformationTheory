@@ -1,0 +1,143 @@
+\documentclass[
+  % all of the below options are optional and can be left out
+  % course name (default: 2IL50 Data Structures)
+  course = {{EE623 Information Theory}},
+  % quartile (default: 3)
+  quartile = {{4}},
+  % assignment number/name (default: 1)
+  assignment = 7,
+  % student name (default: Some One)
+  name = {{Mohammad Mahdi Rahimi}},
+  % student number, NOT S-number (default: 0123456)
+  studentnumber = {{20208244}},
+  % student email (default: s.one@student.tue.nl)
+  email = {{mahi@kaist.ac.kr}},
+  % first exercise number (default: 1)
+  firstexercise = 1
+]{aga-homework}
+
+\usepackage{amssymb,latexsym,amsmath,amsthm}
+\usepackage{amsfonts,rawfonts}
+\usepackage{thmtools}
+\usepackage{systeme}
+\usepackage{mathtools,cancel}
+\usepackage{tikz}
+\usepackage{pgfplots} 
+\usepackage[pdf]{graphviz}
+\pgfplotsset{width=10cm,compat=1.9} 
+ \usepgfplotslibrary{external}
+
+\tikzexternalize 
+
+\begin{document}
+
+\exercise Proofs
+\subexercise $P^n_{XY}(A^{(n)}_\epsilon(P_{XY})) \rightarrow 1\text{ as } n \rightarrow \infty$.
+\\\\
+To prove $P^n_{XY}(A^{(n)}_\epsilon(P_{XY})) \rightarrow 1\text{ as } n \rightarrow \infty$, we show for $B^{(n)}_\epsilon: \{(x^n, y^n) \notin A^{(n)}_\epsilon\}$ we have $P^n_{XY}(B^{(n)}_\epsilon(P_{XY})) \rightarrow 0\text{ as } n \rightarrow \infty$.
+
+The $A^{(n)}_\epsilon$ is the intersection of three set: 
+\begin{equation} \label{eq1}
+\begin{split}
+a_{XY}:& \left\{\left|-\frac{1}{n}logP^n_{XY} - H(P_{XY})\right| \le \epsilon \right\},\\
+a_X:& \left\{\left|-\frac{1}{n}logP^n_{X} - H(P_{X})\right| \le \epsilon \right\},\\
+a_Y:& \left\{\left|-\frac{1}{n}logP^n_{Y} - H(P_{Y})\right| \le \epsilon \right\},\\
+A &= a_{XY} \cap a_X \cap a_Y
+\end{split}
+\end{equation}
+So we have $B^{(n)}_\epsilon$ as:
+\begin{equation} \label{eq2}
+\begin{split}
+b_{XY}:& \left\{\left|-\frac{1}{n}logP^n_{XY} - H(P_{XY})\right| > \epsilon \right\},\\
+b_X:& \left\{\left|-\frac{1}{n}logP^n_{X} - H(P_{X})\right| > \epsilon \right\},\\
+b_Y:& \left\{\left|-\frac{1}{n}logP^n_{Y} - H(P_{Y})\right| > \epsilon \right\},\\
+B &= b_{XY} \cup b_X \cup b_Y
+\end{split}
+\end{equation}
+Therefore,
+\begin{equation} \label{eq3}
+\begin{split}
+P^n_{XY}(B^{(n)}_\epsilon) = P^n_{XY}(b_{xy} \cup b_x \cup b_y) \le P^n_{XY}(b_{xy}) + P^n_{XY}(b_x) + P^n_{XY}(b_y)
+\end{split}
+\end{equation}
+By the WLLN we have $\delta \rightarrow 0 $ as $n \rightarrow \infty$ and:
+\begin{equation} \label{eq4}
+\begin{split}
+&P^n_{XY}(b_{xy}) \le \delta_{xy} \\
+&P^n_{XY}(b_x) \le \delta_x\\
+&P^n_{XY}(b_y) \le \delta_y\\
+\Rightarrow &P^n_{XY}(B^{(n)}_\epsilon) \le \delta\\
+\Rightarrow &P^n_{XY}(A^{(n)}_\epsilon(P_{XY})) \rightarrow 1 \text{ as } n \rightarrow \infty 
+\end{split}
+\end{equation}
+
+\newpage
+
+\subexercise $\left| A^{(n)}_\epsilon(P_{XY})\right| \le e^{n(H(P_{XY})+\epsilon)}$ for any $n$.
+
+From the definition we have:
+\begin{equation} \label{eq5}
+\begin{split}
+&\left|-\frac{1}{n}logP^n_{XY} - H(P_{XY})\right| \le \epsilon\\
+\Rightarrow & -\epsilon \le -\frac{1}{n}logP^n_{XY} - H(P_{XY}) \le \epsilon\\
+\Rightarrow & -n(H(P_{XY}) + \epsilon) \le -\frac{1}{n}logP^n_{XY} \le -n(H(P_{XY}) - \epsilon)\\
+\Rightarrow & e^{-n(H(P_{XY}) + \epsilon)} \le P^n_{XY} \le e^{-n(H(P_{XY}) - \epsilon)}\\
+\Rightarrow & |A^{(n)}_{XY}|e^{-n(H(P_{XY}) + \epsilon)} \le |A^{(n)}_{XY}|P^n_{XY} \le |A^{(n)}_{XY}|e^{-n(H(P_{XY}) - \epsilon)}\\
+\end{split}
+\end{equation}
+By left inequality we have:
+\begin{equation} \label{eq6}
+\begin{split}
+&|A^{(n)}_{XY}|e^{-n(H(P_{XY}) + \epsilon)} \le |A^{(n)}_{XY}|P^n_{XY}\\
+\Rightarrow & |A^{(n)}_{XY}|e^{-n(H(P_{XY}) + \epsilon)} \le |A^{(n)}_{XY}|P^n_{XY} \le |a_{XY}|P^n_{XY} \le 1 \\
+\Rightarrow & |A^{(n)}_{XY}| \le e^{n(H(P_{XY}) + \epsilon)}
+\end{split}
+\end{equation}
+
+
+\subexercise For large enough $n, \left| A^{(n)}_\epsilon(P_{XY})\right| \ge (1-\epsilon)e^{n(H(P_{XY})-\epsilon)}$
+
+For large enough n, we have $A^{(n)}_{XY} \ge (1 - \epsilon)$ which means $A^{(n)}_{XY}$ contain most of $a_{XY}$ and the constraint on $x$ and $y$ does not change the typical set that much for $n$ large enough.
+
+By combining this fact and right inequality of (5) we got:
+\begin{equation} \label{eq7}
+\begin{split}
+&|A^{(n)}_{XY}|e^{-n(H(P_{XY}) - \epsilon)} \ge |A^{(n)}_{XY}|P^n_{XY}\\
+\Rightarrow & |A^{(n)}_{XY}|e^{-n(H(P_{XY}) + \epsilon)} \ge 1 - \epsilon\\
+\Rightarrow & |A^{(n)}_{XY}| \ge (1-\epsilon)e^{n(H(P_{XY}) - \epsilon)}
+\end{split}
+\end{equation}
+
+
+\exercise
+\subexercise Find $C_1$ and $C_2$ that satisfy the questioned statement
+
+By definition of strong typicality for $(a,b)$ inside typical set we have:
+\begin{equation} \label{eq8}
+\begin{split}
+\left|\hat{P}_{x^n}(a,b) - P_{XY}(a,b) \right| \le \delta
+\end{split}
+\end{equation}
+Therefore, by summation of all possible values for $Y$, we get marginal probability of $X$:
+\begin{equation} \label{eq9}
+\begin{split}
+&\sum_y{\left|\hat{P}_{x^n,y^n}(a,b) - P_{XY}(a,b) \right|} \le \sum_y{\delta}\\
+\Rightarrow & \sum_y{\left|\hat{P}_{x^n,y^n}(a,b) - P_{XY}(a,b) \right|} \le \left|\sum_y{\hat{P}_{x^n,y^n}(a,b)} - \sum_y{P_{XY}(a,b)} \right| \le |Y|\delta\\
+\Rightarrow & \left|\hat{P}_{x^n}(a) - P_{X}(a) \right| \le |Y|\delta\\
+\Rightarrow & \hat{T}_{P_X} = \left\{x^n \in X^n : \left| \hat(P)_{x^n}(a) - P_X(a)\right| \le |Y|.\delta, \forall a \in X \right\}
+\end{split}
+\end{equation}
+Likewise we have:
+\begin{equation} \label{eq10}
+\begin{split}
+\hat{T}_{P_Y} = \left\{y^n \in Y^n : \left| \hat(P)_{y^n}(b) - P_Y(b)\right| \le |X|.\delta, \forall b \in Y \right\}
+\end{split}
+\end{equation}
+So finally we find $C_1$ and $C_2$ as:
+\begin{equation} \label{eq11}
+\begin{split}
+C_1 = |Y|\\
+C_2 = |X|
+\end{split}
+\end{equation}
+\end{document}

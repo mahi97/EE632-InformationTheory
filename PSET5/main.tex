@@ -31,21 +31,23 @@
 
 \begin{document}
 
-\exercise Prove Strong typical set is a subset of Weak typical set
-\\\\
+\exercise
+\subexercise
+Prove Strong typical set is a subset of Weak typical set
+
 By definition of Strong typical set we have:
-\begin{equation} \label{eq3}
+\begin{equation} \label{eq1}
 \begin{split}
 & | P(x) - Q(x) | \le \delta \\
 \Rightarrow & Q(x) - \delta \le P(x) \le Q(x) + \delta \\\\
 \Rightarrow & -Q(x)log(Q(x)) - \delta log(Q(x)) \le -P(x)log(Q(x)) \le -Q(x)log(Q(x)) + \delta log(Q(x))\\\\
 \Rightarrow & \sum{-Q(x)log(Q(x))} - \sum{\delta log(Q(x))} \le \sum{-P(x)log(Q(x))} \le \sum{-Q(x)log(Q(x))} + \sum{\delta log(Q(x))}\\\\
 \Rightarrow & H(Q) - \delta \sum{log(Q(x))} \le \sum{-P(x)log(Q(x))} \le H(Q) + \delta \sum{log(Q(x))}\\\\
-\Rightarrow & H(Q) - \epsilon(\delta) \le \sum{-P(x)log(Q(x))} \le H(Q) + \epsilon(\delta)\\
+\Rightarrow & H(Q) - \epsilon(\delta) \le \sum{-P(x)log(Q(x))} \le H(Q) + \epsilon(\delta)
 \end{split}
-\end{equation}\\
+\end{equation}
 On the other hand we have,
-\begin{equation} \label{eq3}
+\begin{equation} \label{eq2}
 \begin{split}
 & Q(X) = \prod{Q(x_i}^{nP(x_i)}\\\\
 \Rightarrow & log(Q(X)) = n\sum{P(x_i)logQ(x_i)}\\\\
@@ -61,32 +63,31 @@ H(Q) - \epsilon(\delta) \le -\frac{1}{n}log(Q(X)) \le H(Q) + \epsilon(\delta)\\
 According to definition of Weak Typical sets and (3), we can conclude than any Strong Typical set is an Weak Typical set.
 
 \newpage
-\\
 \exercise
-\\\\
+
 with t satisfying:
-\begin{equation} \label{eq3}
+\begin{equation} \label{eq4}
 \begin{split}
-\mathbb{E}_P_t [F(X)] & = \sum_{x \in X} P_t(x)F(x) = \eta \\
+\mathbb{E}_{P_t} [F(X)] & = \sum_{x \in X} P_t(x)F(x) = \eta \\
 P_t(x) & = \frac{1}{g(t)}Q(x)e^{tF(x)} \\
 g(t) & = \sum{Q(x)e^{tF(x)}}
 \end{split}
 \end{equation}\\
-We show $s = t$ will maximize following term:\\
-\begin{equation} \label{eq3}
+We show $s = t$ will maximize following term:
+\begin{equation} \label{eq5}
 \begin{split}
 s\eta - \log{g(s)}
 \end{split}
 \end{equation}
 We also have:
-\begin{equation} \label{eq3}
+\begin{equation} \label{eq6}
 \begin{split}
 \frac{dg(t)}{dt} = 
 g^{\prime}(t) = (\sum{Q(x)e^{tF(x)}})^{\prime} = \sum{Q(x)F(x)e^{tF(x)}}
 \end{split}
 \end{equation}\\
 For this we derivative (5) and equal it to zero:
-\begin{equation} \label{eq3}
+\begin{equation} \label{eq7}
 \begin{split}
 & \eta - \frac{g^{\prime}(s)}{g(s)} = 0 \\
 \Rightarrow & \eta = \frac{g^{\prime}(s)}{g(s)} \\
