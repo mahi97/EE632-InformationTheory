@@ -115,22 +115,22 @@ By combining this fact and right inequality of (5) we got:
 By definition of strong typicality for $(a,b)$ inside typical set we have:
 \begin{equation} \label{eq8}
 \begin{split}
-\left|\hat{P}_{x^n}(a,b) - P_{XY}(a,b) \right| \le \delta
+\left|\hat{P}_{x^ny^n}(a,b) - P_{XY}(a,b) \right| \le \delta
 \end{split}
 \end{equation}
 Therefore, by summation of all possible values for $Y$, we get marginal probability of $X$:
 \begin{equation} \label{eq9}
 \begin{split}
-&\sum_y{\left|\hat{P}_{x^n,y^n}(a,b) - P_{XY}(a,b) \right|} \le \sum_y{\delta}\\
-\Rightarrow & \sum_y{\left|\hat{P}_{x^n,y^n}(a,b) - P_{XY}(a,b) \right|} \le \left|\sum_y{\hat{P}_{x^n,y^n}(a,b)} - \sum_y{P_{XY}(a,b)} \right| \le |Y|\delta\\
+&\sum_y{\left|\hat{P}_{x^ny^n}(a,b) - P_{XY}(a,b) \right|} \le \sum_y{\delta}\\
+\Rightarrow & \sum_y{\left|\hat{P}_{x^ny^n}(a,b) - P_{XY}(a,b) \right|} \le \left|\sum_y{\hat{P}_{x^ny^n}(a,b)} - \sum_y{P_{XY}(a,b)} \right| \le |Y|\delta\\
 \Rightarrow & \left|\hat{P}_{x^n}(a) - P_{X}(a) \right| \le |Y|\delta\\
-\Rightarrow & \hat{T}_{P_X} = \left\{x^n \in X^n : \left| \hat(P)_{x^n}(a) - P_X(a)\right| \le |Y|.\delta, \forall a \in X \right\}
+\Rightarrow & \hat{T}_{P_X} = \left\{x^n \in X^n : \left| \hat{P}_{x^n}(a) - P_X(a)\right| \le |Y|.\delta, \forall a \in X \right\}
 \end{split}
 \end{equation}
 Likewise we have:
 \begin{equation} \label{eq10}
 \begin{split}
-\hat{T}_{P_Y} = \left\{y^n \in Y^n : \left| \hat(P)_{y^n}(b) - P_Y(b)\right| \le |X|.\delta, \forall b \in Y \right\}
+\hat{T}_{P_Y} = \left\{y^n \in Y^n : \left| \hat{P}_{y^n}(b) - P_Y(b)\right| \le |X|.\delta, \forall b \in Y \right\}
 \end{split}
 \end{equation}
 So finally we find $C_1$ and $C_2$ as:

@@ -1,0 +1,133 @@
+\documentclass[
+  % all of the below options are optional and can be left out
+  % course name (default: 2IL50 Data Structures)
+  course = {{EE623 Information Theory}},
+  % quartile (default: 3)
+  quartile = {{4}},
+  % assignment number/name (default: 1)
+  assignment = 8,
+  % student name (default: Some One)
+  name = {{Mohammad Mahdi Rahimi}},
+  % student number, NOT S-number (default: 0123456)
+  studentnumber = {{20208244}},
+  % student email (default: s.one@student.tue.nl)
+  email = {{mahi@kaist.ac.kr}},
+  % first exercise number (default: 1)
+  firstexercise = 1
+]{aga-homework}
+
+\usepackage{amssymb,latexsym,amsmath,amsthm}
+\usepackage{amsfonts,rawfonts}
+\usepackage{thmtools}
+\usepackage{systeme}
+\usepackage{mathtools,cancel}
+\usepackage{tikz}
+\usepackage{pgfplots} 
+\usepackage[pdf]{graphviz}
+\pgfplotsset{width=10cm,compat=1.9} 
+ \usepgfplotslibrary{external}
+
+\tikzexternalize 
+
+\begin{document}
+
+\exercise
+\subexercise Find $E_{rep}$.
+\\\\
+By using the Hint from problem we have:
+\begin{equation} \label{eq1}
+\begin{split}
+2^{-n\min_{a \in [1/2, 1]} D_B(a||\epsilon)} \doteq 2^{-nE_{rep}}
+\end{split}
+\end{equation}
+Which leads to solve following optimization problem for $\epsilon \le 1/2$, 
+\begin{equation} \label{eq2}
+\begin{split}
+E_{rep} & \doteq \min_{a \in [1/2, 1]} D_B(a||\epsilon)\\
+\textbf{By Fano's Theorem } \Rightarrow a & = 1/2 \rightarrow \text{closest possible value}\\
+\Rightarrow E_{rep} & = D_B(1/2||\epsilon) \\
+& = \frac{1}{2}\log{(\frac{1/2}{\epsilon})} + \frac{1}{2}\log{(\frac{1 - 1/2}{1 - \epsilon})}\\
+& = -\frac{1}{2}(\log{(2\epsilon)} + \log{(2(1 - \epsilon))})\\
+& = -\log{(2\sqrt{\epsilon(1 - \epsilon)})}
+\end{split}
+\end{equation}
+
+\subexercise Compare $E_{rep}$ and $E_0$.
+\\\\
+For all possible value of $\epsilon$ we have $E_{0} \le E_{rep}$
+\begin{equation} \label{eq3}
+\begin{split}
+&\log{(2)} - \log(1 + 2\sqrt{\epsilon(1 - \epsilon)}) \le -\log{(2\sqrt{\epsilon(1 - \epsilon)})}\\
+& \Rightarrow \log(\frac{2(2\sqrt{\epsilon(1 - \epsilon)}}{1 + 2\sqrt{\epsilon(1 - \epsilon)}}) \le 0\\
+& \Rightarrow \frac{2(2\sqrt{\epsilon(1 - \epsilon)}}{1 + 2\sqrt{\epsilon(1 - \epsilon)}} \le 1 \\
+& \Rightarrow 4\sqrt{\epsilon(1 - \epsilon)} \le 1 + 2\sqrt{\epsilon(1 - \epsilon)} \\
+& \Rightarrow \sqrt{\epsilon(1 - \epsilon)} \le 1/2 \\
+& \Rightarrow \epsilon(1 - \epsilon) \le 1/4 \\
+& \Rightarrow \max_{\epsilon \in \mathbb{R}}\epsilon(1 - \epsilon) = 1/4 \\
+\textbf{so we proved}& \Rightarrow E_{0} \le E_{rep} \text{for any} \epsilon \in \mathbb{R}
+\end{split}
+\end{equation}
+
+\newpage
+
+\subexercise Calculate $E_0$ based on $E_{rep}$.
+\\\\
+First we calculate the probability of distance between $X^n(1)$ and $X^n(2)$ equals to $n\gamma$:
+\begin{equation} \label{eq4}
+\begin{split}
+& \textbf{All Possible form of $X^n(2)$ for a given $X^n(1)$: } 2^n \\
+& \textbf{All Possible form of $X^n(2)$ which has a $n\gamma$ difference with a given $X^n(1)$: } \binom{n}{n\gamma}\\
+& \textbf{Therefore Probability of having a $X^n(2)$ with $n\gamma$ distance from $X^n(1)$ is: } \frac{\binom{n}{n\gamma}}{2^n} = \binom{n}{n\gamma}\left(\frac{1}{2}\right)^n
+\end{split}
+\end{equation}
+From result of (4) we can write:
+\begin{equation} \label{eq5}
+\begin{split}
+Pr\big(\left|X^n(1) \oplus X^n(2)\right| = n\gamma\big) & = \binom{n}{n\gamma}\left(\frac{1}{2}\right)^n\\
+& = \binom{n}{n\gamma}\left(\frac{1}{2}\right)^{n\gamma}\left(\frac{1}{2}\right)^{n(1-\gamma)}\\
+& \doteq e^{nH_B(\gamma)} . e^{n\gamma\log1/2} . e^{n(1 - \gamma)\log1/2}\\
+& \doteq e^{-nD_B(\gamma || 1/2)}
+\end{split}
+\end{equation}
+Second, we show the probability of error in decoding follows as below:
+\begin{equation} \label{eq6}
+\begin{split}
+Pr\left(error\Big|\left|X^n(1) \oplus X^n(2)\right| = n\gamma \right) & \doteq 2^{-n\gamma E_{rep}}
+\end{split}
+\end{equation}
+We can calculate the probability of error:
+\begin{equation} \label{eq7}
+\begin{split}
+Pr_{error} & = \sum^{\gamma n}_{k = \gamma n / 2} \binom{\gamma n}{k} \epsilon^{k} \epsilon^{\gamma n - k}\\
+& = \sum_{\alpha = [1/2, 1]} \binom{\gamma n}{\alpha \gamma n} \epsilon^{\alpha \gamma n} \epsilon^{\gamma n - \alpha \gamma n}\\
+\textbf{Similar to Hint} & \doteq e^{-n \gamma D_B(1/2 || \epsilon)} \textbf{ and } D_B(1/2 || \epsilon) = E_{rep}\\
+& \Rightarrow Pr\left(error\Big|\left|X^n(1) \oplus X^n(2)\right| = n\gamma \right) \doteq 2^{-n\gamma E_{rep}}
+\end{split}
+\end{equation}
+Third, we calculate the $E_0$ by solving $\min_{\gamma \in [0,1]}(D_B(\gamma || 1/2) + \gamma E_{rep})$
+\begin{equation} \label{eq8}
+\begin{split}
+E_0 & = \min_{\gamma \in [0,1]}(D_B(\gamma || 1/2) + \gamma E_{rep})\\
+& = \min_{\gamma \in [0,1]}(\gamma \log(2\gamma) + (1-\gamma) \log(2(1-\gamma)) -\gamma\log{(2\sqrt{\epsilon(1 - \epsilon)})} \\
+\textbf{derivation regards to $\gamma$} = 0 & \Rightarrow log(2\gamma) + \frac{2\gamma}{2\gamma} - log(2(1-\gamma)) - \frac{2(1-\gamma)}{2(1-\gamma)} - \log{(2\sqrt{\epsilon(1 - \epsilon)})} = 0\\
+\textbf{Let } \mathbf{E} = \sqrt{\epsilon(1 - \epsilon)} & \Rightarrow log(2\gamma) - log(2(1-\gamma)) - \log(2\mathbf{E}) = 0\\
+& \Rightarrow \log(\frac{\gamma}{2(1-\gamma)}\mathbf{E}) = 0\\
+& \Rightarrow \gamma = 2(1-\gamma)\mathbf{E}\\
+& \Rightarrow \gamma = \frac{2\mathbf{E}}{1 + 2\mathbf{E}}
+\end{split}
+\end{equation}
+By replacing $gamma$ in original equation:
+\begin{equation} \label{eq9}
+\begin{split}
+E_0 & = \gamma \log(2\gamma) + (1-\gamma) \log(2(1-\gamma)) -\gamma\log{(2E)} \\
+E_0 & = \frac{2\mathbf{E}}{1 + 2\mathbf{E}} \log(\frac{4\mathbf{E}}{1 + 2\mathbf{E}}) + \frac{1}{1 + 2\mathbf{E}} \log(\frac{2}{1 + 2\mathbf{E}}) -\frac{2\mathbf{E}}{1 + 2\mathbf{E}}\log{(2\mathbf{E})} \\
+& = \frac{1}{1 + 2\mathbf{E}}\Big(2\mathbf{E}\log(4\mathbf{E}) - 2\mathbf{E}\log(1 + 2\mathbf{E}) + log(2) - log(1 + 2\mathbf{E}) - 2\mathbf{E}\log(2\mathbf{E})\Big)\\
+& = \frac{1}{1 + 2\mathbf{E}}\Big(2\mathbf{E}\log(2) - 2\mathbf{E}\log(1 + 2\mathbf{E}) + log(2) - log(1 + 2\mathbf{E})\Big)\\
+& = \frac{1}{1 + 2\mathbf{E}}\Big(2\mathbf{E}\log(2) + log(2) - (2\mathbf{E}\log(1 + 2\mathbf{E}) + log(1 + 2\mathbf{E})\Big)\\
+& = \frac{1}{1 + 2\mathbf{E}}\Big((2\mathbf{E} + 1)\log(2) - (2\mathbf{E} + 1)\log(1 + 2\mathbf{E})\Big)\\
+& = \log(2) - \log(1 + 2\mathbf{E})\\
+& = \log(2) - \log(1 + 2\sqrt{\epsilon(1 - \epsilon)})\\
+\end{split}
+\end{equation}
+
+\end{document}
