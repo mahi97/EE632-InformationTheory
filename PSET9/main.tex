@@ -1,0 +1,121 @@
+\documentclass[
+  % all of the below options are optional and can be left out
+  % course name (default: 2IL50 Data Structures)
+  course = {{EE623 Information Theory}},
+  % quartile (default: 3)
+  quartile = {{4}},
+  % assignment number/name (default: 1)
+  assignment = 9,
+  % student name (default: Some One)
+  name = {{Mohammad Mahdi Rahimi}},
+  % student number, NOT S-number (default: 0123456)
+  studentnumber = {{20208244}},
+  % student email (default: s.one@student.tue.nl)
+  email = {{mahi@kaist.ac.kr}},
+  % first exercise number (default: 1)
+  firstexercise = 1
+]{aga-homework}
+
+\usepackage{amssymb,latexsym,amsmath,amsthm}
+\usepackage{amsfonts,rawfonts}
+\usepackage{thmtools}
+\usepackage{systeme}
+\usepackage{mathtools,cancel}
+\usepackage{tikz}
+\usetikzlibrary{arrows,positioning} 
+\usepackage{pgfplots} 
+\usepackage[pdf]{graphviz}
+\pgfplotsset{width=10cm,compat=1.9} 
+ \usepgfplotslibrary{external}
+
+\tikzexternalize 
+
+\begin{document}
+
+\exercise
+\subexercise Converse of Source-Channel Separation.
+\\\\
+\begin{equation} \label{eq1}
+\begin{split}
+kH(P_v) & = H(V^k)\ \ \textbf{Since $V^n$ are i.i.d. with distribution of $P_v$}\\
+& = H(V^K|\hat{V}^k) + I(V^k;\hat{V}^k)\\
+& \le \log(2) + P^{(k)}_e \log(|\mathcal{V}|^k) + I(V^k;\hat{V}^k)\ \ \textbf{By Fano's Inequality} \\
+& \le \log(2) + P^{(k)}_e \log(|\mathcal{V}|^k) + I(X^n;Y^n)\ \ \textbf{By Data Processing Inequality} \\
+& \le \log(2) + P^{(k)}_e \log(|\mathcal{V}|^k) + n.C\ \ \textbf{By DMC} \\
+& \Rightarrow kH(P_v) \le  \log(2) + kP^{(k)}_e \log(|\mathcal{V}|) + n.C
+\end{split}
+\end{equation}
+By Using result of (1) we have:
+\begin{equation} \label{eq2}
+\begin{split}
+kH(P_v) &\le \log(2) + P^{(k)}_e \log(|\mathcal{V}|^k) + n.C \\
+\frac{kH(P_v)}{k\log(|\mathcal{V}|)} - \frac{\log(2)}{k\log(|\mathcal{V}|)} - \frac{n.C}{k\log(|\mathcal{V}|)} & \le P^{(k)}_e \\
+\text{as $n, k \rightarrow \infty$ we have: }  \frac{H(P_v) - (n/k)C}{\log(|\mathcal{V}|)} & \le P^{(k)}_e \\
+\text{if } H(P_v) - (n/k)C \ge 0 \rightarrow kH(P_v)& \ge nC \text{ then, } P^{(k)}_e \ge 0 \\
+\Rightarrow P^{(k)}_e\textbf{ Never goes to Zero with }& kH(P_v) \ge nC.
+\end{split}
+\end{equation}
+
+\subexercise Achievability of Source-Channel Separation.
+\\\\
+\tikzset{
+    %Define standard arrow tip
+    >=stealth',
+    %Define style for boxes
+    punkt/.style={
+           rectangle,
+           rounded corners,
+           draw=black, very thick,
+           text width=4em,
+           minimum height=4em,
+           text centered},
+    % Define arrow style
+    pil/.style={
+           <-,
+           thick,
+           shorten <=2pt,
+           shorten >=2pt,}
+}
+
+\begin{tikzpicture}[node distance=1em] 
+    \node (0) {};
+    \node[punkt] (1) [right=3em of 0] {Source\\Encoder}
+            edge[pil]  node [above] {$V^k$} (0);
+            
+    \node[punkt] (2) [right=3em of 1] {Channel\\Encoder}
+        edge[pil]  node [above, color=red] {$M$} (1)
+        edge[pil]  node [below, color=red] {$0 ... 1$} (1);
+        
+    \node[punkt] (3) [right=3em of 2] {Channel\\$P(X|Y)$}
+        edge[pil]  node [above] {$X^n$} (2);
+
+    \node[punkt] (4) [right=3em of 3] {Channel\\Decoder}
+        edge[pil]  node [above] {$Y^n$} (3);
+
+    \node[punkt] (5) [right=3em of 4] {Source\\Decoder}
+        edge[pil]  node [above, color=red] {$\hat{M}$} (4)
+        edge[pil]  node [below, color=red] {$0...1$} (4);
+
+    \node (6) [right=3em of 5] {}
+     edge[pil]  node [above] {$\hat{V}^k$} (5);
+    % \draw[pil] (0) -- (1) node [] {salam};
+    % \draw[pil] (1) --{Salam} (2) ; 
+    % \draw[->] (2) -- (3); 
+    % \draw (3) -- (4); 
+    % \draw (4) -- (5); 
+\end{tikzpicture} 
+
+$M$ is the message bits from source encoder to channel encoder and $\hat{M}$ is the message bits from channel decoder to source decoder.
+\begin{equation} \label{eq3}
+\begin{split}
+&Pr(V^k \neq \hat{V}^k) = P(\hat{M} = M)P(V^k \neq \hat{V}^k | \hat{M} = M) + P(\hat{M} \neq M)P(V^k \neq \hat{V}^k | \hat{M} \neq M)\\
+\text{By source coding} \Rightarrow & P(V^k \neq \hat{V}^k | \hat{M} = M) \rightarrow 0\ \textbf{ if }\ R_s \ge H(P_v)\ \text{(bits/symbol)}\\ 
+\text{By channel coding} \Rightarrow & P(\hat{M} \neq M) \rightarrow 0\ \textbf{ if }\ R_c \le C\ \text{(bit/symbol)}\\
+|M| = |\hat{M}| \Rightarrow & kR_s = nR_c \\
+\Rightarrow & H(P_v) \le R_s = (n/k)R_c \le (n/k)C\\
+\Rightarrow & H(P_v) \le (n/k)C
+\end{split}
+\end{equation}
+Therefore, we can achieve a reliable reconstruction of the source sequence when $kH(P_v) \le nC$.
+
+\end{document}
