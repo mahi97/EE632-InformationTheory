@@ -21,7 +21,7 @@
 
 \DeclareStringOption[2IL50 Data Structures]%
   {course}
-\DeclareStringOption[3]%
+\DeclareStringOption[Fall]%
   {quartile}
 \DeclareStringOption[1]%
   {assignment}
@@ -67,25 +67,12 @@
 \RequirePackage{xcolor} % for colored text (comments in algorithms)
 \RequirePackage{trimspaces, xstring} % for multiple author parsing
 
-% option post-processing
-\newcommand*{\aga@quartileLastYear}{Q\agahomework@quartile~%
-    \the\numexpr\year-1\relax-\the\year}
-\newcommand*{\aga@quartileNextYear}{Q\agahomework@quartile~%
-    \the\year-\the\numexpr\year+1\relax}
-\newcommand*{\aga@quartile}{%
-  % print last year - this year for Q3+, print this year - next year for Q1, Q2
-  % exception: in the first months of the new year, it can be Q2 and the first
-  % option must be used (handled in nested if)
-  \ifnum\agahomework@quartile < 3%
-    \ifnum\the\month < 6%
-      \aga@quartileLastYear%
-    \else%
-      \aga@quartileNextYear%
-    \fi%
-  \else%
-    \aga@quartileLastYear%
-  \fi%
-}
+% % option post-processing
+% \newcommand*{\aga@quartileLastYear}{\agahomework@quartile~%
+%     \the\numexpr\year-1\relax-\the\year}
+% \newcommand*{\aga@quartileNextYear}{Q\agahomework@quartile~%
+%     \the\year-\the\numexpr\year+1\relax}
+\newcommand*{\aga@quartile}{\agahomework@quartile~}
 
 \newcommand{\aga@temp}{}
 \newcommand{\aga@sub}[4]{%

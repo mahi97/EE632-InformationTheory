@@ -3,7 +3,7 @@
   % course name (default: 2IL50 Data Structures)
   course = {{EE623 Information Theory}},
   % quartile (default: 3)
-  quartile = {{4}},
+  quartile = {{Fall 2020}},
   % assignment number/name (default: 1)
   assignment = 10,
   % student name (default: Some One)
@@ -33,6 +33,55 @@
 \begin{document}
 
 \exercise
-\subexercise Converse of Source-Channel Separation.
+\subexercise Compute the size $|T_{P_{XY}}|$ with exponential approximation.
+\\\\
+By the definition we have $|T_{P_{XY}}|$ equal to multinomial probability.
+\begin{equation} \label{eq1}
+\begin{split}
+|T_{P_{XY}}| = \binom{n}{P_{x_1y_1}, P_{x_1y_2}, ... P_{x_1y_n}, P_{x_2y_1}, P_{x_2y_1}, ...P_{x_ny_{n-1}}, P_{x_ny_n}}\\
+\textbf{By using Stirling's Approximation for large } n \Rightarrow |T_{P_{XY}}| \doteq e^{nH(P_{XY})}
+\end{split}
+\end{equation}
+
+\subexercise Prove: For each pair $(x_n; y_n) \in T_{P_{XY}}$, it is true that $x_n \in T_{P_X}$
+\begin{equation} \label{eq2}
+\begin{split}
+(x_n; y_n) \in T_{P_{XY}} & \Rightarrow \left| \hat{P}_{x^n, y^n}(a,b) - P_{XY}(a,b)\right| \le \delta\ \textbf{and $\delta \rightarrow 0$ as $n \rightarrow \infty$}\\
+& \Rightarrow P_{XY}(a,b) - \delta \le \hat{P}_{x^n, y^n}(a,b) \le P_{XY}(a,b) + \delta\\
+\textbf{Sum for all possible Y to get X marginal} & \Rightarrow \sum_Y (P_{XY}(a,b) - \delta) \le \sum_Y \hat{P}_{x^n, y^n}(a,b) \le \sum_Y (P_{XY}(a,b) + \delta)\\
+& \Rightarrow P_{X}(a) - |Y|\delta \le \hat{P}_{x^n}(a) \le P_{X}(a) + |Y|\delta\\
+& \Rightarrow \left| \hat{P}_{x^n}(a) - P_{X}(a)\right| \le |Y|\delta = \gamma \textbf{and $\gamma \rightarrow 0$ as $n \rightarrow \infty$}\\
+& \Rightarrow x_n \in T_{P_{X}}
+\end{split}
+\end{equation}
+\subexercise Compute the size $|T_W(x^n)|$ with exponential approximation.
+
+We can find size of $|T_W(x^n)|$ by computing average size of $|T_{P_{XY}}|$ for every $T_{P_X}$.
+\begin{equation} \label{eq3}
+\begin{split}
+|T_W(x^n)| = |T_{P_{Y|X}}| = \frac{|T_{P_{XY}}|}{|T_{P_{X}}|} \doteq \frac{e^{nH(X,Y)}}{e^{nH(X)}} = e^{n(H(X,Y) - H(X))} = e^{nH(Y|X)}
+\end{split}
+\end{equation}
+\subexercise Compute the probability of $x^n \in T_{P_{X}}$ and $y^n \in T_W(x^n)$ with exponential approximation.
+We already know:
+\begin{equation} \label{eq4}
+\begin{split}
+Pr(x^n \in T_{P_X}) \doteq e^{-nH(P_X)}\\
+Pr(y^n \in T_{P_Y}) \doteq e^{-nH(P_Y)}\\
+Q^n(T_P) \doteq e^{-nD(P||Q)}
+\end{split}
+\end{equation}
+So we have:
+\begin{equation} \label{eq5}
+\begin{split}
+& Pr(x^n \in T_{P_{X}} \And y^n \in T_W(x^n)) \\
+& = Pr(x^n \in T_{P_X}) * Pr(y^n \in T_W(x^n)) \\
+& = Pr(x^n \in T_{P_X}) * Pr((x^n, y^n) \in T_{P_{XY}} | x^n \in T_{P_X})\\
+& = Pr(x^n \in T_{P_X}) * Pr(x^n \in T_{P_X} \And y^n \in T_{P_Y} | x^n \in T_{P_X})\\
+& = Pr(x^n \in T_{P_X}) * Pr(x^n \in T_{P_X} | x^n \in T_{P_X}) * Pr(y^n \in T_{P_Y} | x^n \in T_{P_X})\\
+& = Pr(x^n \in T_{P_X}) * 1 * P^n_Y(T_{P_X})\\
+& \doteq e^{-nH(P_X)} * e^{-nD(P_X||P_Y)} = e^{-n(H(P_X) + D(P_X||P_Y)}
+\end{split}
+\end{equation}
 
 \end{document}
